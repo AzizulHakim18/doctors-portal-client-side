@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
+import { toast } from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
 import { AuthContext } from '../../../Context/UserContexts';
 
 
@@ -25,7 +25,7 @@ const LogIn = () => {
 
         signin(email, password)
             .then(result => {
-                toast.success('Login Success!')
+                toast.success('Log In success')
                 navigate(from, { replace: true })
                 console.log(result.user)
             })

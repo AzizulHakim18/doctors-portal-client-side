@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/UserContexts';
 
 const Header = () => {
+
+    const { user, logout } = useContext(AuthContext);
+    console.log(user);
+    const name = user?.displayName;
+
+    const handleLogout = () => {
+        logout()
+            .then(() => {
+                toast.success('successfully Loged out')
+            })
+            .catch(err => console.log(err))
+    }
     return (
 
         <div className="navbar bg-base-100">
@@ -16,7 +30,16 @@ const Header = () => {
                         <li><Link to="appointment">Appointment</Link></li>
                         <li><Link to="reviews">Reviews</Link></li>
                         <li><Link to="contactus">Contact Us</Link></li>
-                        <li><Link to="login">Log In</Link></li>
+                        {
+                            user?.uid ? <><li><Link to="dashboard">Dashboard</Link></li>
+                                <li><button onClick={handleLogout}>Log Out</button></li></>
+                                : <li><Link to="login">Log In</Link></li>
+
+                        }
+                        {
+                            user?.uid ? <li><Link>{name}</Link></li>
+                                : <li><Link>User Name</Link></li>
+                        }
                     </ul>
                 </div>
                 <Link to="" className="btn btn-ghost normal-case text-xl">Doctors BD</Link>
@@ -28,7 +51,16 @@ const Header = () => {
                     <li><Link to="appointment">Appointment</Link></li>
                     <li><Link to="reviews">Reviews</Link></li>
                     <li><Link to="contactus">Contact Us</Link></li>
-                    <li><Link to="login">Log In</Link></li>
+                    {
+                        user?.uid ?
+                            <><li><Link to="dashboard">Dashboard</Link></li>
+                                <li><button onClick={handleLogout}>Log Out</button></li></>
+                            : <li><Link to="login">Log In</Link></li>
+                    }
+                    {
+                        user?.uid ? <li><Link>{name}</Link></li>
+                            : <li><Link>User Name</Link></li>
+                    }
                 </ul>
             </div>
         </div>

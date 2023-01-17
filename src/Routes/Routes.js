@@ -3,12 +3,14 @@ import Main from "../Layouts/Main";
 import About from "../Pages/About/About";
 import Apoientment from "../Pages/Apoientment/Apoientment";
 import ContactUs from "../Pages/ContactUs/ContactUs";
+import Dashboard from "../Pages/Dashboard/Dashboard/Dashboard";
 import Error from "../Pages/Error";
 import Home from "../Pages/Home/Home";
 import Reviews from "../Pages/Reviews/Reviews";
 import LogIn from "../Pages/SignInMethod/LogIn/LogIn";
 import LogOut from "../Pages/SignInMethod/LogOut/LogOut";
 import RegisterNow from "../Pages/SignInMethod/RegisterNow/RegisterNow";
+import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter([
     {
@@ -51,4 +53,8 @@ export const router = createBrowserRouter([
 
         ]
     },
+    {
+        path: '/dashboard',
+        element: <PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>
+    }
 ])

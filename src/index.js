@@ -3,14 +3,24 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 import 'react-day-picker/dist/style.css';
 import UserContext from './Context/UserContexts';
 
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+
+const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <UserContext> <App /></UserContext>
+
+    <QueryClientProvider client={queryClient}>
+      <UserContext> <App /></UserContext>
+    </QueryClientProvider>
+
   </React.StrictMode>
 );
 
