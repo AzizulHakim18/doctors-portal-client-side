@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 const AvailableApointments = ({ selectedDate }) => {
 
     const [treatment, setTreatment] = useState(null);
-    console.log(treatment);
+
     const date = format(selectedDate, 'PP');
 
 

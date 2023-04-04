@@ -7,7 +7,7 @@ import treatement from '../../assets/images/treatment.png';
 const Service = () => {
     return (
         <div>
-            <h1>this is service section</h1>
+
             <div className='text-center'>
                 <h1 className='text-3xl font-bold text-emerald-500'>Our Services</h1>
                 <h3 className='text-5xl font-semibold tracking-wide'>Service We Provide</h3>

@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import React, { useContext } from 'react';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../Context/UserContexts';
+import { success } from 'daisyui/src/colors';
 
 const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
     const { name, slots } = treatment;
@@ -17,7 +18,7 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
         event.preventDefault();
         const form = event.target;
         const PersonName = form.name.value;
-        const email = form.email.value;
+        const PersoneEmail = form.email.value;
         const slot = form.slot.value;
         const phone = form.phone.value;
 
@@ -27,12 +28,12 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
             treatment: name,
             patient: PersonName,
             slot,
-            email,
+            email: PersoneEmail,
             phone
         }
-
-        fetch('http://localhost:5000/bookings', {
-            method: 'POST',
+        console.log(booking);
+        fetch('http://localhost:5000/booking', {
+            method: "POST",
             headers: {
                 'content-type': 'application/json'
             },
@@ -41,13 +42,13 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                setTreatment(null)
-                toast('Good Job! successfully Booked', {
-                    icon: '👏',
-                });
-                refetch();
+                if (data.acknowledged) {
+                    setTreatment(null)
+                    refetch()
+                    toast.success("Successfully booked")
+                }
             })
-        console.log(booking);
+
 
     }
     return (
@@ -68,8 +69,8 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
                                 >{slot}</option>)
                             }
                         </select>
-                        <input name='name' type="text" placeholder="Full Name" value={PersonName} className="input w-full max-w-xs input-bordered" />
-                        <input name='email' type="email" placeholder="Email" value={personEmail} className="input w-full max-w-xs input-bordered" />
+                        <input name='name' readOnly type="text" placeholder="Full Name" value={PersonName} className="input w-full max-w-xs input-bordered" />
+                        <input name='email' readOnly type="email" placeholder="Email" value={personEmail} className="input w-full max-w-xs input-bordered" />
                         <input name='phone' type="number" placeholder="Phone Number" className="input w-full max-w-xs input-bordered" />
                         <br />
                         <input type="submit" value="Submit" className='w-full text-xl font-bold bg-gray-500 text-white rounded-lg m-2 p-2' />

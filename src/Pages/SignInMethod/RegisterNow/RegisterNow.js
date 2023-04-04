@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../Context/UserContexts';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
+import useToken from '../../../Hooks/UseHooks';
+import { useState } from 'react';
 
 const RegisterNow = () => {
 
@@ -9,9 +11,14 @@ const RegisterNow = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.from?.pathname || '/'
-    const { createUser, updateName, verifyEmail } =
-        useContext(AuthContext)
+    const { createUser, updateName, verifyEmail } = useContext(AuthContext)
 
+    const [createdUserEmail, setCreatedUserEmail] = useState('')
+    const [token] = useToken(createdUserEmail);
+
+    if (token) {
+        navigate('/');
+    }
     // Signup using Email & Pass
     const handleSubmit = event => {
         event.preventDefault()
@@ -21,34 +28,54 @@ const RegisterNow = () => {
         const password = event.target.password.value
 
         //1. Create Account
-        createUser(email, password)
-            .then(result => {
-                console.log(result.user)
+        if (name || email || password) {
+            createUser(email, password, name)
+                .then(result => {
+                    console.log(result.user)
+                    const user = (result.user)
+                    toast.success('Successfully created an account')
+                    //2. Update Name
+                    updateName(name)
+                        .then(() => {
+                            saveUser(name, email)
+                            toast.success('Name Updated')
 
-                //2. Update Name
-                updateName(name)
-                    .then(() => {
-                        toast.success('Name Updated')
-
-                        //3. Email verification
-                        verifyEmail()
-                            .then(() => {
-                                toast.success('Please check your email for verification link')
-                                navigate(from, { replace: true })
-                            })
-                            .catch(error => {
-                                toast.error(error.message)
-                            })
-                    })
-                    .catch(error => {
-                        toast.error(error.message)
-                    })
-            })
-            .catch(error => console.log(error))
+                            //3. Email verification
+                            verifyEmail()
+                                .then(() => {
+                                    toast.success('Please check your email for verification link')
+                                    navigate(from, { replace: true })
+                                })
+                                .catch(error => {
+                                    toast.error(error.message)
+                                })
+                        })
+                        .catch(error => {
+                            toast.error(error.message)
+                        })
+                })
+                .catch(error => console.log(error))
+        }
+        else {
+            toast.error('Please fill the all input')
+        }
     }
 
-
-
+    const saveUser = (name, email) => {
+        const user = { name, email };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log('save user', data);
+                setCreatedUserEmail(email);
+            })
+    }
 
 
     return (
