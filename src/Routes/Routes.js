@@ -14,6 +14,7 @@ import LogOut from "../Pages/SignInMethod/LogOut/LogOut";
 import RegisterNow from "../Pages/SignInMethod/RegisterNow/RegisterNow";
 import PrivateRoutes from "./PrivateRoutes";
 import AllUsers from "../Pages/Dashboard/Users/AllUsers";
+import AllAppointments from "../Pages/Dashboard/AllAppointments";
 
 export const router = createBrowserRouter([
     {
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
                     {
                         path: '/dashboard/users',
                         element: <AllUsers></AllUsers>
+                    },
+                    {
+                        path: '/dashboard/allappointments',
+                        element: <AllAppointments></AllAppointments>
                     },
                 ]
             },

@@ -19,6 +19,7 @@ const DashboardLayouts = () => {
 
                         <li><Link to="/dashboard">My Appointment</Link></li>
                         <li><Link to="/dashboard/users">All Users</Link></li>
+                        <li><Link to="/dashboard/allappointments">All Appointments</Link></li>
                     </ul>
 
                 </div>

@@ -1,13 +1,12 @@
+import React, { useContext } from 'react';
+import { AuthContext } from '../../Context/UserContexts';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import { useContext } from 'react';
-import { AuthContext } from '../../../Context/UserContexts';
 
-const MyAppointments = () => {
+const AllAppointments = () => {
+
 
     const { user } = useContext(AuthContext);
-    const url = `http://localhost:5000/booking?email=${user?.email}`;
-
+    const url = `http://localhost:5000/allappointments`;
 
     const { data: bookings = [] } = useQuery({
         queryKey: ['bookings', user?.email],
@@ -25,7 +24,7 @@ const MyAppointments = () => {
 
     return (
         <div>
-            <h3 className='text-xl font-semibold mb-4'>My Appointments</h3>
+            <h3 className='text-xl font-semibold mb-4'>All Appointments</h3>
             <div className="overflow-x-auto">
                 <table className="table w-full">
 
@@ -36,6 +35,8 @@ const MyAppointments = () => {
                             <th>Treatment</th>
                             <th>Date</th>
                             <th>Time</th>
+                            <th>Payment</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,6 +49,9 @@ const MyAppointments = () => {
                                 <td>{booking.treatment}</td>
                                 <td>{booking.appointmentDate}</td>
                                 <td>{booking.slot}</td>
+                                <td ><button className='btn btn-sm btn-info'>Payment Done</button></td>
+                                <td><button className='btn btn-error btn-sm'>Delete</button></td>
+
                             </tr>)
                         }
                     </tbody>
@@ -57,4 +61,4 @@ const MyAppointments = () => {
     );
 };
 
-export default MyAppointments;
+export default AllAppointments;
