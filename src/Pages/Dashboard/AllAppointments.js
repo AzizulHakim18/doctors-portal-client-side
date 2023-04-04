@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../Context/UserContexts';
 import { useQuery } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
 
 const AllAppointments = () => {
 
 
     const { user } = useContext(AuthContext);
-    const url = `http://localhost:5000/allappointments`;
 
-    const { data: bookings = [] } = useQuery({
+    const { data: bookings = [], refetch } = useQuery({
         queryKey: ['bookings', user?.email],
         queryFn: async () => {
-            const res = await fetch(url, {
+            const res = await fetch(`http://localhost:5000/allappointments`, {
                 headers: {
                     authorization: `bearer ${localStorage.getItem('accessToken')}`
                 }
@@ -21,6 +21,25 @@ const AllAppointments = () => {
         }
     })
     console.log(bookings);
+
+    const handleDelete = id => {
+        fetch(`http://localhost:5000/allappointments/${id}`, {
+            method: "DELETE",
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.acknowledged) {
+                    toast.success("Successfully deleted the item.")
+                    refetch()
+                }
+                else { toast.error(data.message) }
+            })
+    }
 
     return (
         <div>
@@ -50,7 +69,7 @@ const AllAppointments = () => {
                                 <td>{booking.appointmentDate}</td>
                                 <td>{booking.slot}</td>
                                 <td ><button className='btn btn-sm btn-info'>Payment Done</button></td>
-                                <td><button className='btn btn-error btn-sm'>Delete</button></td>
+                                <td><button onClick={() => handleDelete(booking._id)} className='btn btn-error btn-sm'>Delete</button></td>
 
                             </tr>)
                         }
