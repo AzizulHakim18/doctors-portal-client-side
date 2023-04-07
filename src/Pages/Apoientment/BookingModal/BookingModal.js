@@ -49,7 +49,6 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
                 }
             })
 
-
     }
     return (
         <div>
@@ -69,11 +68,11 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
                                 >{slot}</option>)
                             }
                         </select>
-                        <input name='name' readOnly type="text" placeholder="Full Name" value={PersonName} className="input w-full max-w-xs input-bordered" />
-                        <input name='email' readOnly type="email" placeholder="Email" value={personEmail} className="input w-full max-w-xs input-bordered" />
-                        <input name='phone' type="number" placeholder="Phone Number" className="input w-full max-w-xs input-bordered" />
+                        <input name='name' type="text" placeholder="Full Name" value={PersonName} className="input w-full max-w-xs input-bordered" required />
+                        <input name='email' type="email" placeholder="Email" value={personEmail} className="input w-full max-w-xs input-bordered" required />
+                        <input name='phone' type="number" placeholder="Phone Number" className="input w-full max-w-xs input-bordered" required />
                         <br />
-                        <input type="submit" value="Submit" className='w-full text-xl font-bold bg-gray-500 text-white rounded-lg m-2 p-2' />
+                        <input type="submit" value="Submit" className='w-full text-xl font-bold btn btn-secondery text-white rounded-lg m-2 p-2' />
                     </form>
                 </div>
             </div>
