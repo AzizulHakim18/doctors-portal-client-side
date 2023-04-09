@@ -11,7 +11,7 @@ const AllAppointments = () => {
     const { data: bookings = [], refetch } = useQuery({
         queryKey: ['bookings', user?.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/allappointments`, {
+            const res = await fetch(`https://doctorsbd-server-side.vercel.app/allappointments`, {
                 headers: {
                     authorization: `bearer ${localStorage.getItem('accessToken')}`
                 }
@@ -23,7 +23,7 @@ const AllAppointments = () => {
     console.log(bookings);
 
     const handleDelete = id => {
-        fetch(`http://localhost:5000/allappointments/${id}`, {
+        fetch(`https://doctorsbd-server-side.vercel.app/allappointments/${id}`, {
             method: "DELETE",
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

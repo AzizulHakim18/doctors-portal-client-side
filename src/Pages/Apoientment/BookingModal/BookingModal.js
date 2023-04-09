@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import React, { useContext } from 'react';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../Context/UserContexts';
-import { success } from 'daisyui/src/colors';
+
 
 const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
     const { name, slots } = treatment;
@@ -32,7 +32,7 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
             phone
         }
         console.log(booking);
-        fetch('http://localhost:5000/booking', {
+        fetch('https://doctorsbd-server-side.vercel.app/booking', {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
